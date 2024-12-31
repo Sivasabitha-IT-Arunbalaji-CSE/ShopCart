@@ -95,5 +95,10 @@ npm install -g nodemon
 - Navigate to the `admin` directory: `cd admin`
 - Start the server: `npm run dev`
 
+### Unit test
+Unit test is done .
+
+![WhatsApp Image 2024-12-31 at 3 41 01 PM](https://github.com/user-attachments/assets/56f1f3e0-d1d8-407e-8f23-a8b13ac43663)
+
 
 
