@@ -20,9 +20,9 @@ Shop Cart is a modern, responsive e-commerce platform built for **Crystal Delta*
 ## **Project Setup**
 
 ### **Prerequisites**
-- Node.js (v14 or above)
-- MongoDB (local or cloud setup)
-- npm or yarn
+- Node.js 
+- MongoDB (local and cloud setup with Atlas and compass)
+- npm 
 
 ### Install dependencies for frontend and backend separately
 **Tip:** To efficiently install dependencies for the frontend, admin, and backend simultaneously, use split terminals.
@@ -65,7 +65,7 @@ STRIPE_SECRET_KEY = ""
 - Create a `.env` file in the `frontend & Admin` directories.
 - Add the following variable:
 ```bash
-# Backend URL (adjust if needed)
+# Backend URL (adjust if needed change the port number)
 VITE_BACKEND_URL="http://localhost:4000"
 ```
 
