@@ -187,8 +187,8 @@ const Add = ({ token }) => {
             )}
             {category === 'Fashion' && (
               <>
-                <option value="MensClothing">Men's Clothing</option>
-                <option value="WomensClothing">Women's Clothing</option>
+                <option value="Men'sClothing">Men's Clothing</option>
+                <option value="Women'sClothing">Women's Clothing</option>
                 <option value="Footwear">Footwear</option>
                 <option value="Accessories">Accessories</option>
                 <option value="Jewelry">Jewelry</option>
@@ -224,7 +224,7 @@ const Add = ({ token }) => {
             {category === 'BooksAndStationery' && (
               <>
                 <option value="Books">Books</option>
-                <option value="NotebooksAndJournals">Notebooks and Journals</option>
+                <option value="Notebooks And Journals">Notebooks and Journals</option>
                 <option value="OfficeSupplies">Office Supplies</option>
                 <option value="ArtSupplies">Art Supplies</option>
                 <option value="StationerySets">Stationery Sets</option>
@@ -292,7 +292,3 @@ const Add = ({ token }) => {
 };
 
 export default Add;
-
-
-
-

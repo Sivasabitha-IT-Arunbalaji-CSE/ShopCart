@@ -9,21 +9,21 @@ const Collection = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState(products); // Show all products initially
   const [selectedCategories, setSelectedCategories] = useState([]); // No category selected initially
-  const [subcategory, setSubCategory] = useState(""); // No subcategory selected initially
-  const [sortType, setSortType] = useState("relevant");
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]); // Allow multiple subcategories
+  const [sortType, setSortType] = useState('relevant');
 
   const getCategorySubCategories = (category) => {
     switch (category) {
       case 'Electronics':
         return ['Smartphones and Accessories', 'Laptops and Computers', 'Audio Devices', 'Cameras and Photography', 'Smart Home Devices'];
       case 'Fashion':
-        return ['Men\'s Clothing', 'Women\'s Clothing', 'Footwear', 'Accessories', 'Jewelry'];
+        return ["Men's Clothing", "Women's Clothing", 'Footwear', 'Accessories', 'Jewelry'];
       case 'HomeAppliances':
         return ['Refrigerators', 'Washing Machines', 'Air Conditioners', 'Microwaves', 'Vacuum Cleaners'];
       case 'KitchenAppliances':
         return ['Mixers and Grinders', 'Blenders', 'Ovens', 'Toasters', 'Coffee Makers'];
       case 'HealthAndBeauty':
-        return ['Skincare', 'Haircare', 'Makeup', 'Fitness Equipment', 'Personal Care'];
+        return ['Skincare', 'Haircare', 'Makeup', 'Fragrances', 'Personal Care'];
       case 'BooksAndStationery':
         return ['Books', 'Notebooks and Journals', 'Writing Instruments', 'Office Supplies', 'Art Supplies'];
       default:
@@ -31,21 +31,32 @@ const Collection = () => {
     }
   };
 
-  useEffect(() => {
-    setSubCategory(""); // Reset subcategory when category changes
-  }, [selectedCategories]);
-
   const toggleCategory = (e) => {
     const value = e.target.value;
     if (selectedCategories.includes(value)) {
       setSelectedCategories(selectedCategories.filter((category) => category !== value));
+      // Reset subcategories when the parent category is unchecked
+      setSelectedSubcategories(selectedSubcategories.filter((sub) =>
+        getCategorySubCategories(value).indexOf(sub) === -1
+      ));
     } else {
       setSelectedCategories([...selectedCategories, value]);
     }
   };
 
   const toggleSubCategory = (e) => {
-    setSubCategory(e.target.value);
+    const value = e.target.value;
+
+    // the subcategory belongs to one of the selected categories
+    const validSubcategories = selectedCategories.flatMap(getCategorySubCategories);
+
+    if (!validSubcategories.includes(value)) return; 
+
+    if (selectedSubcategories.includes(value)) {
+      setSelectedSubcategories(selectedSubcategories.filter((sub) => sub !== value));
+    } else {
+      setSelectedSubcategories([...selectedSubcategories, value]);
+    }
   };
 
   const applyFilter = () => {
@@ -65,9 +76,11 @@ const Collection = () => {
       );
     }
 
-    // Filter by subcategory if a subcategory is selected
-    if (subcategory) {
-      filteredProducts = filteredProducts.filter((item) => item.subCategory === subcategory);
+    // Filter by subcategories if any subcategory is selected
+    if (selectedSubcategories.length > 0) {
+      filteredProducts = filteredProducts.filter((item) =>
+        selectedSubcategories.includes(item.subCategory)
+      );
     }
 
     setFilterProducts(filteredProducts);
@@ -93,7 +106,7 @@ const Collection = () => {
 
   useEffect(() => {
     applyFilter();
-  }, [selectedCategories, subcategory, search, showSearch, products]);
+  }, [selectedCategories, selectedSubcategories, search, showSearch, products]);
 
   useEffect(() => {
     sortProducts();
@@ -139,22 +152,20 @@ const Collection = () => {
           <div className={`border border-gray-300 pl-5 py-3 my-5 ${showFilter ? '' : 'hidden'} sm:block`}>
             <p className="mb-3 text-sm font-medium">SUBCATEGORIES</p>
             <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-              {selectedCategories.map((cat) => (
-                <div key={cat}>
-                  {getCategorySubCategories(cat).map((sub, index) => (
-                    <p key={index} className="flex gap-2">
-                      <input
-                        className="w-3"
-                        type="checkbox"
-                        value={sub}
-                        onChange={toggleSubCategory}
-                        checked={subcategory === sub}
-                      />
-                      {sub}
-                    </p>
-                  ))}
-                </div>
-              ))}
+              {selectedCategories.flatMap((cat) =>
+                getCategorySubCategories(cat).map((sub, index) => (
+                  <p key={index} className="flex gap-2">
+                    <input
+                      className="w-3"
+                      type="checkbox"
+                      value={sub}
+                      onChange={toggleSubCategory}
+                      checked={selectedSubcategories.includes(sub)}
+                    />
+                    {sub}
+                  </p>
+                ))
+              )}
             </div>
           </div>
         )}
@@ -191,4 +202,11 @@ const Collection = () => {
 };
 
 export default Collection;
+
+
+
+
+
+
+
 

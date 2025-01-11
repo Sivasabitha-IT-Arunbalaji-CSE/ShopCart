@@ -2,13 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// Ensure you import your logo image correctly
-import logo from '../assets/frontend_assets/logo.png'; // Or use an icon if preferred
-
-// Ensure you import your image correctly for login image
+import logo from '../assets/frontend_assets/logo.png';
 import loginImage from '../assets/frontend_assets/login_img.jpg';
-
-// Import FontAwesome icons
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
@@ -24,22 +19,20 @@ const Login = () => {
 
   const handleLogout = () => {
     setToken(null);
-    localStorage.removeItem('token'); // Remove the token from localStorage
-    navigate('/login'); // Redirect to login page
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    // Check if password and confirm password match for registration
     if (password !== confirmPassword && currentState === 'Register') {
       toast.error('Passwords do not match!');
-      return; // Prevent submission if passwords do not match
+      return;
     }
 
     try {
       if (currentState === 'Register') {
-        // Send registration request (password stored as plain text)
         const response = await axios.post(`${backendUrl}/api/user/register`, { name, email, password });
         if (response.data.success) {
           toast.success('Registration successful! You can now log in.');
@@ -48,14 +41,15 @@ const Login = () => {
           toast.error(response.data.message);
         }
       } else {
-        // Send login request
         const response = await axios.post(`${backendUrl}/api/user/login`, { email, password });
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem('token', response.data.token);
+          toast.success('Login successful! Redirecting to the homepage...');
+          navigate('/');
         } else {
           toast.error(response.data.message);
-          localStorage.removeItem('token'); // Ensure token is removed if login fails
+          localStorage.removeItem('token');
         }
       }
     } catch (error) {
