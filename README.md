@@ -1,7 +1,7 @@
 
 # **Shopcart - E-Commerce Site**
 
-Shop Cart is a modern, responsive e-commerce platform built for **Crystal Delta** by teammate **"Arunbalaji (CSE)" and "Sivasabitha (IT)"** using the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It allows users to browse a wide range of products, manage their shopping cart, and place orders. The platform also includes an admin panel for managing products, orders, and users.
+Shop Cart is a modern, responsive e-commerce platform built for **Crystal Delta** project by teammate **"Arunbalaji (CSE)" and "Sivasabitha (IT)"** using the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It allows users to browse a wide range of products, manage their shopping cart, and place orders. The platform also includes an admin panel for managing products, orders, and users. 
 
 
 
